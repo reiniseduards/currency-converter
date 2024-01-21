@@ -23,7 +23,7 @@ To run the Currency Converter application, follow these steps:
 1.Ensure you have the necessary dependencies installed, including ASP.NET MVC and jQuery.
 
 2.Clone the repository to your local machine.
-git clone https://github.com/reiniseduards/CurrencyConverter.git
+git clone https://github.com/reiniseduards/currency-converter.git
 
 3.Open the solution in Visual Studio or your preferred IDE.
 
