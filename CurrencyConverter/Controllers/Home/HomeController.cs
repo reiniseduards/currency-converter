@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Net;
 using System.Web.Mvc;
+using CurrencyConverter.Interfaces;
 using CurrencyConverter.Models;
 using Newtonsoft.Json;
 
@@ -9,6 +10,17 @@ namespace CurrencyConverter.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IWebClientWrapper webClient;
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(IWebClientWrapper webClient)
+        {
+            this.webClient = webClient;
+        }
+
         // Action method for the default view
         public ActionResult Index()
         {
@@ -28,18 +40,15 @@ namespace CurrencyConverter.Controllers
                 // Build API request URL
                 string url = $"{apiUrl}/{fromCurrency}/{toCurrency}/{amount}";
 
-                using (var webClient = new WebClient())
-                {
-                    // Make API request and deserialize response
-                    string json = webClient.DownloadString(url);
-                    Response response = JsonConvert.DeserializeObject<Response>(json);
+                // Use the injected webClient instance
+                string json = webClient.DownloadString(url);
+                Response response = JsonConvert.DeserializeObject<Response>(json);
 
-                    // Update response fields with additional information
-                    UpdateResponseFields(response, fromCurrency, toCurrency, amount);
+                // Update response fields with additional information
+                UpdateResponseFields(response, fromCurrency, toCurrency, amount);
 
-                    // Return JSON response to the client
-                    return Json(response);
-                }
+                // Return JSON response to the client
+                return Json(response);
             }
             catch (Exception)
             {
