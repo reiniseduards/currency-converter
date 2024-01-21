@@ -1,7 +1,31 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@Scripts.Render("~/Scripts/Home/submitExchangeForm.js")
 
 <main>
+    <form id="exchangeForm">
+        <label for="amount">Amount:</label>
+        <input id="amount" type="number" required min="0" />
 
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+            @foreach (var currency in ViewBag.CurrencyList)
+            {
+                <option value="@currency">@currency</option>
+            }
+        </select>
+
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+            @foreach (var currency in ViewBag.CurrencyList)
+            {
+                <option value="@currency">@currency</option>
+            }
+        </select>
+
+        <button id="convert" type="button" onclick="submitExchangeForm()">Convert</button>
+    </form>
+    <div id="result-view">
+    </div>
 </main>
